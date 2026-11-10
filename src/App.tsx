@@ -7,6 +7,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import AboutPage from "./pages/AboutPage";
 import CookieBanner from "./components/CookieBanner";
+import StudioPage, { PublicDemo } from "./pages/StudioPage";
 
 const qc = new QueryClient();
 
@@ -30,24 +31,30 @@ function AppRoutes() {
 
   return (
     <Routes>
+      <Route path="/" element={<StudioPage />} />
       <Route path="/login" element={isAuthenticated ? <Navigate to="/drive" replace /> : <LoginPage />} />
       <Route path="/drive" element={<ProtectedRoute><DrivePage /></ProtectedRoute>} />
       <Route path="/drive/:folderId" element={<ProtectedRoute><DrivePage /></ProtectedRoute>} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/terms" element={<TermsPage />} />
       <Route path="/about" element={<AboutPage />} />
-      <Route path="*" element={<Navigate to="/drive" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
 
 export default function App() {
+  if (window.location.pathname.startsWith("/demo/")) return <PublicDemo />;
+  // The studio and its shareable demos do not require Telegram authentication.
+  if (window.location.pathname === basename || window.location.pathname === basename + "/") {
+    return <StudioPage />;
+  }
   return (
     <QueryClientProvider client={qc}>
       <BrowserRouter basename={basename}>
         <AuthProvider>
           <AppRoutes />
-          <CookieBanner />
+          {!((window.location.pathname === basename || window.location.pathname === basename + "/")) && <CookieBanner />}
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
