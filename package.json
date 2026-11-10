@@ -7,12 +7,19 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/index.mjs",
+    "password-hash": "node server/hash-password.mjs",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.1",
     "dexie": "^4.4.4",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.4",
+    "helmet": "^8.3.0",
     "lucide-react": "^1.21.0",
+    "pg": "^8.23.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.0",
@@ -26,6 +33,7 @@
     "autoprefixer": "^10.5.2",
     "daisyui": "^3.9.4",
     "oxlint": "^1.69.0",
+    "pg-mem": "^3.0.14",
     "postcss": "^8.5.15",
     "tailwindcss": "^3.4.19",
     "typescript": "~6.0.2",

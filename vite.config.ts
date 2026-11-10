@@ -12,6 +12,8 @@ const repoName = process.env.GITHUB_REPOSITORY
 
 export default defineConfig({
   base: repoName,
+  build: { assetsDir: "siteflow-assets" },
+  server: { allowedHosts: true, proxy: { '/api': 'http://127.0.0.1:7777' } },
   resolve: {
     alias: {
       os: path.resolve(__dirname, 'src/stubs/os.ts'),
